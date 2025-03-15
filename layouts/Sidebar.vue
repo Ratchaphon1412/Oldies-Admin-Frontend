@@ -1,10 +1,9 @@
 <script setup>
 import {
   Home,
-  LineChart,
+  MessageCircleMore,
   Package,
-  Package2,
-  Settings,
+  CreditCard,
   ShoppingCart,
   Users2,
 } from 'lucide-vue-next'
@@ -15,74 +14,91 @@ import {
             <nav class="flex flex-col items-center gap-4 px-2 sm:py-5">
                 <a
                 href="#"
-                class="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+                class="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
                 >
-                <Package2 class="h-4 w-4 transition-all group-hover:scale-110" />
+                <!-- <Package2 class="h-4 w-4 transition-all group-hover:scale-110" /> -->
+                 <Logo class="h-8 w-auto" />
                 <span class="sr-only">Acme Inc</span>
                 </a>
                 <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger as-child>
-                    <a
-                        href="#"
+                    <NuxtLink
+                        to="/"
                         class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                     >
                         <Home class="h-5 w-5" />
                         <span class="sr-only">Dashboard</span>
-                    </a>
+                    </NuxtLink>
                     </TooltipTrigger>
                     <TooltipContent side="right">
-                    Dashboard
+                        Dashboard
                     </TooltipContent>
                 </Tooltip>
                 </TooltipProvider>
                 <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger as-child>
-                    <a
-                        href="#"
+                    <NuxtLink
+                        to="/bookings"
                         class="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                     >
                         <ShoppingCart class="h-5 w-5" />
-                        <span class="sr-only">Orders</span>
-                    </a>
+                        <span class="sr-only">Bookings</span>
+                    </NuxtLink>
                     </TooltipTrigger>
                     <TooltipContent side="right">
-                    Orders
+                        Bookings
                     </TooltipContent>
                 </Tooltip>
                 </TooltipProvider>
 
+                
                 <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger as-child>
-                    <a
-                        href="#"
+                    <NuxtLink
+                        to="/"
                         class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                     >
                         <Package class="h-5 w-5" />
-                        <span class="sr-only">Products</span>
-                    </a>
+                        <span class="sr-only">Packages</span>
+                    </NuxtLink>
                     </TooltipTrigger>
                     <TooltipContent side="right">
-                    Products
+                        Packages
                     </TooltipContent>
                 </Tooltip>
                 </TooltipProvider>
-
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger as-child>
+                        <a
+                            href="#"
+                            class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                        >
+                            <CreditCard class="h-5 w-5" />
+                            <span class="sr-only">Transactions</span>
+                        </a>
+                        </TooltipTrigger>
+                        <TooltipContent side="right">
+                            Transactions
+                        </TooltipContent>
+                    </Tooltip>
+                    </TooltipProvider>
                 <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger as-child>
-                    <a
-                        href="#"
+                    <NuxtLink
+                        to="/"
                         class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                     >
                         <Users2 class="h-5 w-5" />
-                        <span class="sr-only">Customers</span>
-                    </a>
+                        <span class="sr-only">Facilitator</span>
+                    </NuxtLink>
                     </TooltipTrigger>
                     <TooltipContent side="right">
-                    Customers
+                        Facilitator
                     </TooltipContent>
                 </Tooltip>
                 </TooltipProvider>
@@ -90,34 +106,16 @@ import {
                 <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger as-child>
-                    <a
-                        href="#"
+                    <NuxtLink
+                        to="https://chatwoot.oldiesth.com/"
                         class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                     >
-                        <LineChart class="h-5 w-5" />
-                        <span class="sr-only">Analytics</span>
-                    </a>
+                        <MessageCircleMore class="h-5 w-5" />
+                        <span class="sr-only">Chat</span>
+                    </NuxtLink>
                     </TooltipTrigger>
                     <TooltipContent side="right">
-                    Analytics
-                    </TooltipContent>
-                </Tooltip>
-                </TooltipProvider>
-            </nav>
-            <nav class="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
-                <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger as-child>
-                    <a
-                        href="#"
-                        class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                    >
-                        <Settings class="h-5 w-5" />
-                        <span class="sr-only">Settings</span>
-                    </a>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">
-                    Settings
+                        Chat
                     </TooltipContent>
                 </Tooltip>
                 </TooltipProvider>

@@ -1,48 +1,4 @@
 <script setup lang="ts">
-// import { Badge } from '@/components/ui/badge'
-
-// import {
-//   Breadcrumb,
-//   BreadcrumbItem,
-//   BreadcrumbLink,
-//   BreadcrumbList,
-//   BreadcrumbPage,
-//   BreadcrumbSeparator,
-// } from '@/components/ui/breadcrumb'
-// import { Button } from '@/components/ui/button'
-// import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-// import { Checkbox } from '@/components/ui/checkbox'
-// import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-// import { Input } from '@/components/ui/input'
-// import {
-//   Pagination,
-//   PaginationList,
-//   PaginationNext,
-//   PaginationPrev,
-// } from '@/components/ui/pagination'
-// import { Progress } from '@/components/ui/progress'
-// import { Separator } from '@/components/ui/separator'
-// import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-// import {
-//   Table,
-//   TableBody,
-//   TableCell,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-// } from '@/components/ui/table'
-// import {
-//   Tabs,
-//   TabsContent,
-//   TabsList,
-//   TabsTrigger,
-// } from '@/components/ui/tabs'
-// import {
-//   Tooltip,
-//   TooltipContent,
-//   TooltipProvider,
-//   TooltipTrigger,
-// } from '@/components/ui/tooltip'
 import {
   CircleUser,
   Copy,
@@ -272,17 +228,6 @@ const data = [
           </div>
           <Tabs default-value="week">
             <div class="flex items-center">
-              <TabsList>
-                <TabsTrigger value="week">
-                  Week
-                </TabsTrigger>
-                <TabsTrigger value="month">
-                  Month
-                </TabsTrigger>
-                <TabsTrigger value="year">
-                  Year
-                </TabsTrigger>
-              </TabsList>
               <div class="ml-auto flex items-center gap-2">
                 <DropdownMenu>
                   <DropdownMenuTrigger as-child>
@@ -338,7 +283,7 @@ const data = [
             <TabsContent value="week">
               <Card>
                 <CardHeader class="px-7">
-                  <CardTitle>Orders</CardTitle>
+                  <CardTitle>Packages</CardTitle>
                   <CardDescription>
                     Recent orders from your store.
                   </CardDescription>
@@ -387,79 +332,41 @@ const data = [
                           $250.00
                         </TableCell>
                       </TableRow>
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="week">
+              <Card>
+                <CardHeader class="px-7">
+                  <CardTitle>Booking</CardTitle>
+                  <CardDescription>
+                    Recent orders from your store.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
                       <TableRow>
-                        <TableCell>
-                          <div class="font-medium">
-                            Olivia Smith
-                          </div>
-                          <div class="hidden text-sm text-muted-foreground md:inline">
-                            olivia@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell class="hidden sm:table-cell">
-                          Refund
-                        </TableCell>
-                        <TableCell class="hidden sm:table-cell">
-                          <Badge class="text-xs" variant="outline">
-                            Declined
-                          </Badge>
-                        </TableCell>
-                        <TableCell class="hidden md:table-cell">
-                          2023-06-24
-                        </TableCell>
-                        <TableCell class="text-right">
-                          $150.00
-                        </TableCell>
+                        <TableHead>Customer</TableHead>
+                        <TableHead class="hidden sm:table-cell">
+                          Type
+                        </TableHead>
+                        <TableHead class="hidden sm:table-cell">
+                          Status
+                        </TableHead>
+                        <TableHead class="hidden md:table-cell">
+                          Date
+                        </TableHead>
+                        <TableHead class="text-right">
+                          Amount
+                        </TableHead>
                       </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div class="font-medium">
-                            Noah Williams
-                          </div>
-                          <div class="hidden text-sm text-muted-foreground md:inline">
-                            noah@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell class="hidden sm:table-cell">
-                          Subscription
-                        </TableCell>
-                        <TableCell class="hidden sm:table-cell">
-                          <Badge class="text-xs" variant="secondary">
-                            Fulfilled
-                          </Badge>
-                        </TableCell>
-                        <TableCell class="hidden md:table-cell">
-                          2023-06-25
-                        </TableCell>
-                        <TableCell class="text-right">
-                          $350.00
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div class="font-medium">
-                            Emma Brown
-                          </div>
-                          <div class="hidden text-sm text-muted-foreground md:inline">
-                            emma@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell class="hidden sm:table-cell">
-                          Sale
-                        </TableCell>
-                        <TableCell class="hidden sm:table-cell">
-                          <Badge class="text-xs" variant="secondary">
-                            Fulfilled
-                          </Badge>
-                        </TableCell>
-                        <TableCell class="hidden md:table-cell">
-                          2023-06-26
-                        </TableCell>
-                        <TableCell class="text-right">
-                          $450.00
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow class="bg-accent">
                         <TableCell>
                           <div class="font-medium">
                             Liam Johnson
@@ -483,7 +390,41 @@ const data = [
                           $250.00
                         </TableCell>
                       </TableRow>
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="week">
+              <Card>
+                <CardHeader class="px-7">
+                  <CardTitle>Facilitator</CardTitle>
+                  <CardDescription>
+                    Recent orders from your store.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
                       <TableRow>
+                        <TableHead>Customer</TableHead>
+                        <TableHead class="hidden sm:table-cell">
+                          Type
+                        </TableHead>
+                        <TableHead class="hidden sm:table-cell">
+                          Status
+                        </TableHead>
+                        <TableHead class="hidden md:table-cell">
+                          Date
+                        </TableHead>
+                        <TableHead class="text-right">
+                          Amount
+                        </TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow class="bg-accent">
                         <TableCell>
                           <div class="font-medium">
                             Liam Johnson
@@ -505,54 +446,6 @@ const data = [
                         </TableCell>
                         <TableCell class="text-right">
                           $250.00
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div class="font-medium">
-                            Olivia Smith
-                          </div>
-                          <div class="hidden text-sm text-muted-foreground md:inline">
-                            olivia@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell class="hidden sm:table-cell">
-                          Refund
-                        </TableCell>
-                        <TableCell class="hidden sm:table-cell">
-                          <Badge class="text-xs" variant="outline">
-                            Declined
-                          </Badge>
-                        </TableCell>
-                        <TableCell class="hidden md:table-cell">
-                          2023-06-24
-                        </TableCell>
-                        <TableCell class="text-right">
-                          $150.00
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div class="font-medium">
-                            Emma Brown
-                          </div>
-                          <div class="hidden text-sm text-muted-foreground md:inline">
-                            emma@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell class="hidden sm:table-cell">
-                          Sale
-                        </TableCell>
-                        <TableCell class="hidden sm:table-cell">
-                          <Badge class="text-xs" variant="secondary">
-                            Fulfilled
-                          </Badge>
-                        </TableCell>
-                        <TableCell class="hidden md:table-cell">
-                          2023-06-26
-                        </TableCell>
-                        <TableCell class="text-right">
-                          $450.00
                         </TableCell>
                       </TableRow>
                     </TableBody>
