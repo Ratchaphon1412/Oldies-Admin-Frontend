@@ -5,7 +5,10 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     'shadcn-nuxt',
+    "@pinia/nuxt",
+    "pinia-plugin-persistedstate/nuxt",
     '@nuxtjs/supabase',
+    '@vee-validate/nuxt',
     '@nuxt/image',
   ],
 
@@ -14,9 +17,18 @@ export default defineNuxtConfig({
     componentDir: './components/ui',
   },
 
+  imports:{
+    dirs:[
+      'composables/api/**',
+      'composables/**',
+    ]
+  },
+
   runtimeConfig: {
     public: {
       supabaseRedirectUrl: '',
+      backendUrl: '',
+      mediaUrl:''
     },
   },
 
@@ -28,5 +40,9 @@ export default defineNuxtConfig({
       exclude: [],
       cookieRedirect: false,
     }
+  },
+
+  pinia: {
+    storesDirs: ['./state/**'],
   },
 })
