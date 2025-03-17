@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import {
   CircleUser,
-  Copy,
-  CreditCard,
+  // Copy,
+  // CreditCard,
   File,
   Home,
   ListFilter,
-  MoreVertical,
+  // MoreVertical,
   Package,
   Package2,
   PanelLeft,
   Search,
   ShoppingCart,
-  Truck,
+  // Truck,
   Users2,
 } from 'lucide-vue-next'
 
@@ -168,7 +168,8 @@ const data = [
           </DropdownMenuContent>
         </DropdownMenu>
       </header>
-      <main class="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
+      <!-- lg:grid-cols-3 xl:grid-cols-3 -->
+      <main class="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
         <div class="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
           <LineChart
             :data="data"
@@ -293,7 +294,7 @@ const data = [
             </TabsContent>
           </Tabs>
         </div>
-        <div>
+        <!-- <div>
           <Card class="overflow-hidden">
             <CardHeader class="flex flex-row items-start bg-muted/50">
               <div class="grid gap-0.5">
@@ -451,7 +452,7 @@ const data = [
               </Pagination>
             </CardFooter>
           </Card>
-        </div>
+        </div> -->
       </main>
     </div>
 </template>

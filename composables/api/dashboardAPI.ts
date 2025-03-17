@@ -24,7 +24,7 @@ export default function (){
   }
 
   async function getAdminFacilitatorListAPI(params: string = ''): Promise<{ status: number, data: ResponseListFacilitatorAPIType }> {
-    return await $axios.get(`/facilitator/list/?active=False${params}`).then(({status,data}) => {
+    return await $axios.get(`/admin/facilitator/?active=True${params}`).then(({status,data}) => {
       return { status: status, data: data };
     }).catch((error)=>{
       return { status: error.response.status, data:  error.response.data };

@@ -5,14 +5,11 @@
         getCoreRowModel,
         useVueTable,
     } from '@tanstack/vue-table'
-    import {
-        PenLine,
-        CircleOff,
-        Upload
-    } from 'lucide-vue-next';
     import { Button } from '@/components/ui/button'
+    import { useIntervalFn } from '@vueuse/core'
 
     const { getAdminListPackagesAPI } = dashboardAPI();
+    const { getApprovePackageAPI } = approveAPI()
 
     type Category = {
         id?: number
@@ -43,6 +40,24 @@
     const data = ref<Package[]>(packages.data.results)
 
     const config = useRuntimeConfig()
+
+    const keepPage = ref(1)
+
+    useIntervalFn(async () => {
+        await getAdminListPackagesAPI(`?limit=15&offset=${(keepPage.value- 1) * 15}`).then((res) => {
+            data.value = res.data.results
+        })
+    }, 60000)
+
+    async function approve(pack: Package) {
+        await getApprovePackageAPI(pack.id).then(async ({status}) => {
+            if (status === 200) {
+                await getAdminListPackagesAPI(`?limit=15&offset=${(keepPage.value- 1) * 15}`).then((res) => {
+                    data.value = res.data.results
+                })
+            }
+        })
+    }
 
     const columns: ColumnDef<Package>[] = [
         {
@@ -75,7 +90,7 @@
         },
         {
             accessorKey: 'status',
-            header: () => h('div', { class: 'text-center' }, 'STATUS'),
+            header: () => h('div', 'STATUS'),
             cell: ({ row }) => {
                 switch (row.getValue('status')) {
                 case 'approved':
@@ -97,32 +112,16 @@
             }
         },
         {
-            accessorKey: 'edit',
-            header: () => h('div', { class: 'text-center' }, 'ACTION'),
-            cell: () => {
-                return h('div', { class: 'flex justify-center gap-2' }, [
-                    h(Button, { class: 'flex bg-transparent border-0 shadow-none hover:bg-transparent text-black px-2 py-1 rounded-md', onClick: () => {console.log("i clicked")} } , [
-                        h(PenLine, { class: 'w-4 h-4' }),
-                        h('span', { class: 'text-xs' }, 'Edit')
-                    ])
-                ])
-            }
-        },
-        {
-            accessorKey: 'approved',
-            header: () => h(''),
+            accessorKey: 'action',
+            header: () => h('div', 'ACTION'),
             cell: ({ row }) => {
-                if (row.getValue('approved')) {
-                return h('div', { class: 'flex justify-center gap-2' }, [
-                    h(Upload, { class: 'w-4 h-4 text-green-500 rounded-full' }),
-                    h('span', { class: 'text-xs text-green-500' }, 'Publish')
-                ])
-                } else {
-                return h('div', { class: 'flex justify-center gap-2' }, [
-                    h(CircleOff, { class: 'w-4 h-4 text-red-500 rounded-full' }),
-                    h('span', { class: 'text-xs text-red-500' }, 'Disabled')
-                ])
+                if (row.getValue('status') === 'waiting_approve') {
+                    return h(Button, { class: 'items-center bg-[#39CCCC] hover:bg-[#39CCCC] rounded-full',onClick: () => approve(row.original) }, [
+                        h('p', { class: 'text-white' }, 'Approve')
+                    ])
                 }
+
+                return h('')
             }
         }
     ]
@@ -184,17 +183,33 @@
             </Table>
     
             <Pagination v-slot="{ page }" :total="packages.data.count" :items-per-page="15" :sibling-count="1" show-edges :default-page="1">
-                <PaginationList v-slot="{ items  }" class="flex items-center gap-1">
-                <PaginationPrev @click="packagePaginate(page-1)" />
+                <PaginationList v-slot="{ items }" class="flex items-center gap-1">
+                <PaginationPrev 
+                    @click="() => {
+                        packagePaginate(page-1)
+                        keepPage = page - 1
+                    }"
+                />
                     <template v-for="(item, index) in items">
                         <PaginationListItem v-if="item.type === 'page'" :key="index" :value="item.value" as-child>
-                            <Button class="w-10 h-10 p-0" :variant="item.value === page ? 'default' : 'outline'" @click="packagePaginate(item.value)" >
+                            <Button 
+                                class="w-10 h-10 p-0" :variant="item.value === page ? 'default' : 'outline'" 
+                                @click="() => {
+                                    packagePaginate(item.value)
+                                    keepPage = item.value
+                                }"
+                            >
                                 {{ item.value }}
                             </Button>
                         </PaginationListItem>
                         <PaginationEllipsis v-else :key="item.type" :index="index" />
                     </template>
-                <PaginationNext @click="packagePaginate(page+1)" />
+                <PaginationNext 
+                    @click="() => {
+                        packagePaginate(page+1)
+                        keepPage = page + 1
+                    }"
+                />
                 </PaginationList>
             </Pagination>
         </CardContent>

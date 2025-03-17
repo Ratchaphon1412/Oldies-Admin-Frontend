@@ -80,7 +80,6 @@ export interface FacilitatorShowListType {
     profile: string;
     short_description: string;
     slug: string;
-    address: addressType
     name: string
     setup_status: string
     rejected_reason: string | null
@@ -88,6 +87,14 @@ export interface FacilitatorShowListType {
     account: {
         email: string
     }
+    address_schedule: {
+        address: addressType
+        schedule: {
+            day_of_week: number
+            open_time: string
+            close_time: string
+        }[]
+    }[]
 }
 
 export interface ResponseListFacilitatorAPIType {

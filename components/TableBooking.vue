@@ -5,6 +5,7 @@
         getCoreRowModel,
         useVueTable,
     } from '@tanstack/vue-table'
+    import { useIntervalFn } from '@vueuse/core'
     import { Button } from '@/components/ui/button'
 
     const { getAdminListBookingAPI } = dashboardAPI()
@@ -63,8 +64,13 @@
     const booking = await getAdminListBookingAPI()
     const data = ref<Booking[]>(booking.data.results)
 
-    console.log(data.value)
+    const keepPage = ref(1)
 
+    useIntervalFn(async () => {
+        await getAdminListBookingAPI(`?limit=15&offset=${(keepPage.value- 1) * 15}`).then((res) => {
+            data.value = res.data.results
+        })
+    }, 60000)
 
     const columns: ColumnDef<Booking>[] = [
         {
@@ -106,11 +112,11 @@
                 case 'information':
                     return h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full bg-[#CCFBF1] text-[#115E59]' }, 'Information')
                 case 'waiting_payment':
-                    return h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full bg-[#FEF9C3] text-[#854D0E]' }, 'Waiting Payment')
+                    return h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full bg-violet-600 text-white' }, 'Waiting Payment')
                 case 'waiting_facilitator_approve':
                     return h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full bg-[#FEF9C3] text-[#854D0E]' }, 'Waiting Facilitator Approve')
                 case 'waiting_for_service':
-                    return h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full bg-[#FEF9C3] text-[#854D0E]' }, 'Waiting For Service')
+                    return h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full bg-teal-400 text-white' }, 'Waiting For Service')
                 case 'reject':
                     return h('div', { class: 'gap-2' } ,[
                         h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full bg-[#FEE2E2] text-[#991B1B]' }, 'Reject'),
@@ -120,6 +126,8 @@
                             onClick: () => {console.log('status Reject and this is a reason.')} 
                         }, 'Check Reason'),
                     ])
+                case 'completed':
+                    return h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full bg-teal-400 text-white' }, 'Completed')
                 default:
                     return h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full text-[#FFA500]' }, 'unknown')
                 }
@@ -129,7 +137,7 @@
             accessorKey: 'date',
             header: () => h('div', 'DATE'),
             cell:({ row }) => {
-                return h('p', { class: 'font-medium line-clamp-3' }, row.getValue('date') + ' ' + row.getValue('time'))
+                return h('p', { class: 'font-medium line-clamp-3' }, row.getValue('date'))
             }
         },
         {
@@ -143,7 +151,7 @@
     ]
 
     async function packagePaginate(page: number) {
-        const  offset = (page - 1) * 15
+        const offset = (page - 1) * 15
         const limit = 15
         await getAdminListBookingAPI(`?limit=${limit}&offset=${offset}`).then((res) => {
           data.value = res.data.results
@@ -197,19 +205,34 @@
                     </template>
                 </TableBody>
             </Table>
-    
             <Pagination v-slot="{ page }" :total="booking.data.count" :items-per-page="15" :sibling-count="1" show-edges :default-page="1">
-                <PaginationList v-slot="{ items  }" class="flex items-center gap-1">
-                <PaginationPrev @click="packagePaginate(page-1)" />
+                <PaginationList v-slot="{ items }" class="flex items-center gap-1">
+                <PaginationPrev 
+                    @click="() => {
+                        packagePaginate(page-1)
+                        keepPage = page - 1
+                    }"
+                />
                     <template v-for="(item, index) in items">
                         <PaginationListItem v-if="item.type === 'page'" :key="index" :value="item.value" as-child>
-                            <Button class="w-10 h-10 p-0" :variant="item.value === page ? 'default' : 'outline'" @click="packagePaginate(item.value)" >
+                            <Button 
+                                class="w-10 h-10 p-0" :variant="item.value === page ? 'default' : 'outline'" 
+                                @click="() => {
+                                    packagePaginate(item.value)
+                                    keepPage = item.value
+                                }"
+                            >
                                 {{ item.value }}
                             </Button>
                         </PaginationListItem>
                         <PaginationEllipsis v-else :key="item.type" :index="index" />
                     </template>
-                <PaginationNext @click="packagePaginate(page+1)" />
+                <PaginationNext 
+                    @click="() => {
+                        packagePaginate(page+1)
+                        keepPage = page + 1
+                    }"
+                />
                 </PaginationList>
             </Pagination>
         </CardContent>
