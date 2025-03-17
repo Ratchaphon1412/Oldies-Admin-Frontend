@@ -67,7 +67,7 @@
     const keepPage = ref(1)
 
     useIntervalFn(async () => {
-        await getAdminListBookingAPI(`?limit=15&offset=${(keepPage.value- 1) * 15}`).then((res) => {
+        await getAdminListBookingAPI(`?limit=15&offset=${(keepPage.value - 1) * 15}`).then((res) => {
             data.value = res.data.results
         })
     }, 60000)

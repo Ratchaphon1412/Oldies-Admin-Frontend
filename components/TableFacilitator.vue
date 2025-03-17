@@ -53,7 +53,7 @@
     const keepPage = ref(1)
 
     useIntervalFn(async () => {
-        await getAdminFacilitatorListAPI(`?limit=15&offset=${(keepPage.value- 1) * 15}`).then((res) => {
+        await getAdminFacilitatorListAPI(`&limit=15&offset=${(keepPage.value - 1) * 15}`).then((res) => {
             data.value = res.data.results
         })
     }, 60000)
@@ -61,7 +61,7 @@
     async function approve(facilitator: Facilitator) {
         await getApproveFacilitatorAPI(facilitator.id).then(async ({status}) => {
             if (status === 200) {
-                await getAdminFacilitatorListAPI(`?limit=15&offset=${(keepPage.value- 1) * 15}`).then((res) => {
+                await getAdminFacilitatorListAPI(`&limit=15&offset=${(keepPage.value - 1) * 15}`).then((res) => {
                     data.value = res.data.results
                 })
             }

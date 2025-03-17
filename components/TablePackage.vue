@@ -44,7 +44,7 @@
     const keepPage = ref(1)
 
     useIntervalFn(async () => {
-        await getAdminListPackagesAPI(`?limit=15&offset=${(keepPage.value- 1) * 15}`).then((res) => {
+        await getAdminListPackagesAPI(`?limit=15&offset=${(keepPage.value - 1) * 15}`).then((res) => {
             data.value = res.data.results
         })
     }, 60000)
@@ -52,7 +52,7 @@
     async function approve(pack: Package) {
         await getApprovePackageAPI(pack.id).then(async ({status}) => {
             if (status === 200) {
-                await getAdminListPackagesAPI(`?limit=15&offset=${(keepPage.value- 1) * 15}`).then((res) => {
+                await getAdminListPackagesAPI(`?limit=15&offset=${(keepPage.value - 1) * 15}`).then((res) => {
                     data.value = res.data.results
                 })
             }
