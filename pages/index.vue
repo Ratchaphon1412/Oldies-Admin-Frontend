@@ -3,9 +3,9 @@ import {
   CircleUser,
   // Copy,
   // CreditCard,
-  File,
+  // File,
   Home,
-  ListFilter,
+  // ListFilter,
   // MoreVertical,
   Package,
   Package2,
@@ -124,25 +124,6 @@ const data = [
             </nav>
           </SheetContent>
         </Sheet>
-        <Breadcrumb class="hidden md:flex">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink as-child>
-                <a href="#">Dashboard</a>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink as-child>
-                <a href="#">Orders</a>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Recent Orders</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
         <div class="relative ml-auto flex-1 md:grow-0">
           <Search class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
@@ -181,7 +162,7 @@ const data = [
                 : ''
             }"
           />
-          <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+          <!-- <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
             <Card class="sm:col-span-2">
               <CardHeader class="pb-3">
                 <CardTitle>Your Orders</CardTitle>
@@ -226,10 +207,10 @@ const data = [
                 <Progress :model-value="12" aria-label="12% increase" />
               </CardFooter>
             </Card>
-          </div>
+          </div> -->
           <Tabs default-value="week">
             <div class="flex items-center">
-              <div class="ml-auto flex items-center gap-2">
+              <!-- <div class="ml-auto flex items-center gap-2">
                 <DropdownMenu>
                   <DropdownMenuTrigger as-child>
                     <Button variant="outline" size="sm" class="h-7 gap-1 rounded-md px-3">
@@ -279,7 +260,7 @@ const data = [
                   <File class="h-3.5 w-3.5" />
                   <span class="sr-only sm:not-sr-only">Export</span>
                 </Button>
-              </div>
+              </div> -->
             </div>
             <TabsContent value="week">
               <TablePackage />

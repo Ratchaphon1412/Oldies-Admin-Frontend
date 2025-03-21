@@ -1,11 +1,11 @@
 <script setup>
 import {
   Home,
-  MessageCircleMore,
-  Package,
-  CreditCard,
-  ShoppingCart,
-  Users2,
+  // MessageCircleMore,
+  // Package,
+  // CreditCard,
+  // ShoppingCart,
+  // Users2,
 } from 'lucide-vue-next'
 </script>
 <template>
@@ -36,7 +36,7 @@ import {
                     </TooltipContent>
                 </Tooltip>
                 </TooltipProvider>
-                <TooltipProvider>
+                <!-- <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger as-child>
                     <NuxtLink
@@ -118,7 +118,7 @@ import {
                         Chat
                     </TooltipContent>
                 </Tooltip>
-                </TooltipProvider>
+                </TooltipProvider> -->
             </nav>
         </aside>
             <slot />
