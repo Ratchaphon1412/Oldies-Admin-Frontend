@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <NuxtImg src="/assets/logo.svg" alt="Oldies" preload :class="classSize" />
+    <img src="/public/favicon.ico" alt="Oldies" preload :class="classSize" />
   </div>
 </template>
 

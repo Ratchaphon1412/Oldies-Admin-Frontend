@@ -61,13 +61,13 @@
         is_service: boolean
     }
 
-    const booking = await getAdminListBookingAPI()
+    const booking = await getAdminListBookingAPI('?limit=5&offset=0')
     const data = ref<Booking[]>(booking.data.results)
 
     const keepPage = ref(1)
 
     useIntervalFn(async () => {
-        await getAdminListBookingAPI(`?limit=15&offset=${(keepPage.value - 1) * 15}`).then((res) => {
+        await getAdminListBookingAPI(`?limit=5&offset=${(keepPage.value - 1) * 5}`).then((res) => {
             data.value = res.data.results
         })
     }, 60000)
@@ -110,7 +110,7 @@
             cell: ({ row }) => {
                 switch (row.getValue('status')) {
                 case 'information':
-                    return h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full bg-[#CCFBF1] text-[#115E59]' }, 'Information')
+                    return h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full bg-[#CCFBF1] text-[#15E59]' }, 'Information')
                 case 'waiting_payment':
                     return h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full bg-violet-600 text-white' }, 'Waiting Payment')
                 case 'waiting_facilitator_approve':
@@ -151,8 +151,8 @@
     ]
 
     async function packagePaginate(page: number) {
-        const offset = (page - 1) * 15
-        const limit = 15
+        const offset = (page - 1) * 5
+        const limit = 5
         await getAdminListBookingAPI(`?limit=${limit}&offset=${offset}`).then((res) => {
           data.value = res.data.results
         })
@@ -205,7 +205,7 @@
                     </template>
                 </TableBody>
             </Table>
-            <Pagination v-slot="{ page }" :total="booking.data.count" :items-per-page="15" :sibling-count="1" show-edges :default-page="1">
+            <Pagination v-slot="{ page }" :total="booking.data.count" :items-per-page="5" :sibling-count="1" show-edges :default-page="1">
                 <PaginationList v-slot="{ items }" class="flex items-center gap-1">
                 <PaginationPrev 
                     @click="() => {

@@ -45,7 +45,7 @@
     const { getAdminFacilitatorListAPI } = dashboardAPI()
     const { getApproveFacilitatorAPI } = approveAPI()
 
-    const facilitators = await getAdminFacilitatorListAPI()
+    const facilitators = await getAdminFacilitatorListAPI('?limit=5&offset=0')
     const data = ref<Facilitator[]>(facilitators.data.results)
 
     const config = useRuntimeConfig()
@@ -53,7 +53,7 @@
     const keepPage = ref(1)
 
     useIntervalFn(async () => {
-        await getAdminFacilitatorListAPI(`?limit=15&offset=${(keepPage.value - 1) * 15}`).then((res) => {
+        await getAdminFacilitatorListAPI(`?limit=5&offset=${(keepPage.value - 1) * 5}`).then((res) => {
             data.value = res.data.results
         })
     }, 60000)
@@ -61,7 +61,7 @@
     async function approve(facilitator: Facilitator) {
         await getApproveFacilitatorAPI(facilitator.id).then(async ({status}) => {
             if (status === 200) {
-                await getAdminFacilitatorListAPI(`?limit=15&offset=${(keepPage.value - 1) * 15}`).then((res) => {
+                await getAdminFacilitatorListAPI(`?limit=5&offset=${(keepPage.value - 1) * 5}`).then((res) => {
                     data.value = res.data.results
                 })
             }
@@ -128,8 +128,8 @@
     ]
 
     async function packagePaginate(page: number) {
-        const  offset = (page - 1) * 15
-        const limit = 15
+        const offset = (page - 1) * 5
+        const limit = 5
         await getAdminFacilitatorListAPI(`?limit=${limit}&offset=${offset}`).then((res) => {
           data.value = res.data.results
         })
@@ -183,7 +183,7 @@
                 </TableBody>
             </Table>
     
-            <Pagination v-slot="{ page }" :total="facilitators.data.count" :items-per-page="15" :sibling-count="1" show-edges :default-page="1">
+            <Pagination v-slot="{ page }" :total="facilitators.data.count" :items-per-page="5" :sibling-count="1" show-edges :default-page="1">
                 <PaginationList v-slot="{ items }" class="flex items-center gap-1">
                 <PaginationPrev 
                     @click="() => {

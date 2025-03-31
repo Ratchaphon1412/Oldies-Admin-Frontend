@@ -16,62 +16,72 @@ import {
   Users2,
 } from 'lucide-vue-next'
 
+type Package = {
+  created_at: string;
+}
+
+type Facilitator = {
+  created_at: string
+}
+
+type Booking = {
+  created_at: string
+}
+
 definePageMeta({
   layout: 'sidebar',
 })
 
-const data = [
-  {
-    'year': 1970,
-    'Export Growth Rate': 2.04,
-    'Import Growth Rate': 1.53,
-  },
-  {
-    'year': 1971,
-    'Export Growth Rate': 1.96,
-    'Import Growth Rate': 1.58,
-  },
-  {
-    'year': 1972,
-    'Export Growth Rate': 1.96,
-    'Import Growth Rate': 1.61,
-  },
-  {
-    'year': 1973,
-    'Export Growth Rate': 1.93,
-    'Import Growth Rate': 1.61,
-  },
-  {
-    'year': 1974,
-    'Export Growth Rate': 1.88,
-    'Import Growth Rate': 1.67,
-  },
-  {
-    'year': 1975,
-    'Export Growth Rate': 1.79,
-    'Import Growth Rate': 1.64,
-  },
-  {
-    'year': 1976,
-    'Export Growth Rate': 1.77,
-    'Import Growth Rate': 1.62,
-  },
-  {
-    'year': 1977,
-    'Export Growth Rate': 1.74,
-    'Import Growth Rate': 1.69,
-  },
-  {
-    'year': 1978,
-    'Export Growth Rate': 1.74,
-    'Import Growth Rate': 1.7,
-  },
-  {
-    'year': 1979,
-    'Export Growth Rate': 1.77,
-    'Import Growth Rate': 1.67,
-  },
-]
+const { getAdminListBookingAPI } = dashboardAPI()
+const { getAdminFacilitatorListAPI } = dashboardAPI()
+const { getAdminListPackagesAPI } = dashboardAPI();
+
+const bookings = await getAdminListBookingAPI()
+const facilitators = await getAdminFacilitatorListAPI()
+const packages = await getAdminListPackagesAPI()
+
+const resultBooking = ref<Booking[]>(bookings.data.results)
+const resultFacilitator = ref<Facilitator[]>(facilitators.data.results)
+const resultPackage = ref<Package[]>(packages.data.results)
+
+const countByDay = (data: { created_at: string }[]) => {
+  return data.reduce((acc: Record<string, number>, item) => {
+    const day = item.created_at.split('T')[0];
+    acc[day] = (acc[day] || 0) + 1;
+    return acc;
+  }, {});
+};
+
+function sortDate(format: Record<string, number>) {
+  return Object.entries(format)
+  .sort(([dayA], [dayB]) => new Date(dayA).getTime() - new Date(dayB).getTime())
+  .reduce((acc: Record<string, number>, [day, count]) => {
+    acc[day] = count;
+    return acc;
+  }, {});
+}
+
+const dataBooking = Object.entries(sortDate(countByDay(resultBooking.value))).map(([day, count]) => {
+  return {
+    day,
+    'Booking Growth Rate': count,
+  };
+});
+
+const dataFacilitator = Object.entries(sortDate(countByDay(resultFacilitator.value))).map(([day, count]) => {
+  return {
+    day,
+    'Facilitator Growth Rate': count,
+  };
+});
+
+const dataPackage = Object.entries(sortDate(countByDay(resultPackage.value))).map(([day, count]) => {
+  return {
+    day,
+    'Package Growth Rate': count,
+  };
+});
+
 </script>
 
 <template>
@@ -152,16 +162,41 @@ const data = [
       <!-- lg:grid-cols-3 xl:grid-cols-3 -->
       <main class="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
         <div class="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
-          <LineChart
-            :data="data"
-            index="year"
-            :categories="['Export Growth Rate', 'Import Growth Rate']"
-            :y-formatter="(tick:number | Date, i:number) => {
-              return typeof tick === 'number'
-                ? `$ ${new Intl.NumberFormat('us').format(tick).toString()}`
+          <div class="flex space-x-4">
+            <LineChart
+              :data="dataBooking"
+              index="day"
+              :categories="['Booking Growth Rate']"
+              :y-formatter="(tick:number | Date) => {
+                return typeof tick === 'number'
+                ? `${tick.toString()}`
                 : ''
-            }"
-          />
+              }"
+              :colors="['#2DD4BF']"
+            />
+            <LineChart
+              :data="dataFacilitator"
+              index="day"
+              :categories="['Facilitator Growth Rate']"
+              :y-formatter="(tick:number | Date, i:number) => {
+                return typeof tick === 'number'
+                  ? `${tick.toString()}`
+                  : ''
+              }"
+              :colors="['#2DD4BF']"
+            />
+            <LineChart
+              :data="dataPackage"
+              index="day"
+              :categories="['Package Growth Rate']"
+              :y-formatter="(tick:number | Date, i:number) => {
+                return typeof tick === 'number'
+                  ? `${tick.toString()}`
+                  : ''
+              }"
+              :colors="['#2DD4BF']"
+            />
+          </div>
           <!-- <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
             <Card class="sm:col-span-2">
               <CardHeader class="pb-3">

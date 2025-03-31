@@ -43,6 +43,7 @@ export type PackageShowListType = {
     slug: string;
     approved: boolean;
     status: string;
+    created_at: string;
 }
 
 
@@ -66,6 +67,7 @@ export interface BookingShowListType {
     qr_token: string
     cancel_reason: string | null
     is_service: boolean
+    created_at: string
 }
 
 export interface ResponseListBookingAPIType {
@@ -95,6 +97,7 @@ export interface FacilitatorShowListType {
             close_time: string
         }[]
     }[]
+    created_at: string
 }
 
 export interface ResponseListFacilitatorAPIType {

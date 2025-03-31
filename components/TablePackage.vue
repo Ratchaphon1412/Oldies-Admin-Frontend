@@ -36,7 +36,7 @@
         status: string;
     }
 
-    const packages = await getAdminListPackagesAPI()
+    const packages = await getAdminListPackagesAPI('?limit=5&offset=0')
     const data = ref<Package[]>(packages.data.results)
 
     const config = useRuntimeConfig()
@@ -44,7 +44,7 @@
     const keepPage = ref(1)
 
     useIntervalFn(async () => {
-        await getAdminListPackagesAPI(`?limit=15&offset=${(keepPage.value - 1) * 15}`).then((res) => {
+        await getAdminListPackagesAPI(`?limit=5&offset=${(keepPage.value - 1) * 5}`).then((res) => {
             data.value = res.data.results
         })
     }, 60000)
@@ -52,7 +52,7 @@
     async function approve(pack: Package) {
         await getApprovePackageAPI(pack.id).then(async ({status}) => {
             if (status === 200) {
-                await getAdminListPackagesAPI(`?limit=15&offset=${(keepPage.value - 1) * 15}`).then((res) => {
+                await getAdminListPackagesAPI(`?limit=5&offset=${(keepPage.value - 1) * 5}`).then((res) => {
                     data.value = res.data.results
                 })
             }
@@ -94,7 +94,7 @@
             cell: ({ row }) => {
                 switch (row.getValue('status')) {
                 case 'approved':
-                    return h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full bg-[#CCFBF1] text-[#115E59]' }, 'Publish')
+                    return h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full bg-[#CCFBF1] text-[#15E59]' }, 'Publish')
                 case 'waiting_approve':
                     return h('p', { class: 'w-max p-1 text-xs font-semibold rounded-full bg-[#FEF9C3] text-[#854D0E]' }, 'Waiting Approve')
                 case 'reject':
@@ -127,8 +127,8 @@
     ]
 
     async function packagePaginate(page: number) {
-        const  offset = (page - 1) * 15
-        const limit = 15
+        const  offset = (page - 1) * 5
+        const limit = 5
         await getAdminListPackagesAPI(`?limit=${limit}&offset=${offset}`).then((res) => {
           data.value = res.data.results
         })
@@ -182,7 +182,7 @@
                 </TableBody>
             </Table>
     
-            <Pagination v-slot="{ page }" :total="packages.data.count" :items-per-page="15" :sibling-count="1" show-edges :default-page="1">
+            <Pagination v-slot="{ page }" :total="packages.data.count" :items-per-page="5" :sibling-count="1" show-edges :default-page="1">
                 <PaginationList v-slot="{ items }" class="flex items-center gap-1">
                 <PaginationPrev 
                     @click="() => {
