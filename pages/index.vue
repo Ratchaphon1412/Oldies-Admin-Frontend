@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import {
-  CircleUser,
-  // Copy,
-  // CreditCard,
-  // File,
-  Home,
-  // ListFilter,
-  // MoreVertical,
-  Package,
-  Package2,
-  PanelLeft,
-  Search,
-  ShoppingCart,
-  // Truck,
-  Users2,
-} from 'lucide-vue-next'
+// import {
+//   CircleUser,
+//   Copy,
+//   CreditCard,
+//   File,
+//   Home,
+//   ListFilter,
+//   MoreVertical,
+//   Package,
+//   Package2,
+//   PanelLeft,
+//   Search,
+//   ShoppingCart,
+//   Truck,
+//   Users2,
+// } from 'lucide-vue-next'
 
 type Package = {
   created_at: string;
@@ -86,7 +86,7 @@ const dataPackage = Object.entries(sortDate(countByDay(resultPackage.value))).ma
 
 <template>
     <div class="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-      <header class="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+      <!-- <header class="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
         <Sheet>
           <SheetTrigger as-child>
             <Button size="icon" variant="outline" class="sm:hidden">
@@ -158,7 +158,7 @@ const dataPackage = Object.entries(sortDate(countByDay(resultPackage.value))).ma
             <DropdownMenuItem>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </header>
+      </header> -->
       <!-- lg:grid-cols-3 xl:grid-cols-3 -->
       <main class="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
         <div class="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
@@ -168,9 +168,9 @@ const dataPackage = Object.entries(sortDate(countByDay(resultPackage.value))).ma
               index="day"
               :categories="['Booking Growth Rate']"
               :y-formatter="(tick:number | Date) => {
-                return typeof tick === 'number'
-                ? `${tick.toString()}`
-                : ''
+                return typeof tick === 'number' && tick.toString().split('.').length > 1
+                  ? ''
+                  : `${tick.toString()}`
               }"
               :colors="['#2DD4BF']"
             />
@@ -178,10 +178,10 @@ const dataPackage = Object.entries(sortDate(countByDay(resultPackage.value))).ma
               :data="dataFacilitator"
               index="day"
               :categories="['Facilitator Growth Rate']"
-              :y-formatter="(tick:number | Date, i:number) => {
-                return typeof tick === 'number'
-                  ? `${tick.toString()}`
-                  : ''
+              :y-formatter="(tick:number | Date) => {
+                return typeof tick === 'number' && tick.toString().split('.').length > 1
+                  ? ''
+                  : `${tick.toString()}`
               }"
               :colors="['#2DD4BF']"
             />
@@ -189,10 +189,10 @@ const dataPackage = Object.entries(sortDate(countByDay(resultPackage.value))).ma
               :data="dataPackage"
               index="day"
               :categories="['Package Growth Rate']"
-              :y-formatter="(tick:number | Date, i:number) => {
-                return typeof tick === 'number'
-                  ? `${tick.toString()}`
-                  : ''
+              :y-formatter="(tick:number | Date) => {
+                return typeof tick === 'number' && tick.toString().split('.').length > 1
+                  ? ''
+                  : `${tick.toString()}`
               }"
               :colors="['#2DD4BF']"
             />
